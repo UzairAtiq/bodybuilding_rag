@@ -1,14 +1,14 @@
 from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams,PointStruct
-
+from app.config import QDRANT_URL
 
 
 
 def indexer(chunked_text,name) :
 
   #Setting up Qdrant client
-  client = QdrantClient(url="http://localhost:6333")
+  client = QdrantClient(url=QDRANT_URL)
 
   #Creeating Qdrant collection if it does not exsist
   if not client.collection_exists ( name ) :
@@ -27,13 +27,14 @@ def indexer(chunked_text,name) :
     #loading the metadeta and page content from langchain document object
     page_content = chunk.page_content
 
-    #Joining all exsisting headers in hierarchial order
+    #Getting and Joining all exsisting headers in hierarchial order
     levels = [chunk.metadata.get(f"Header {n}") for n in range(1,5)]
     header = " > ".join(h for h in levels if h)
 
-    #calculate embeddings 
+    #calculate embeddings for chunks
     emebeddings = model.encode(page_content)
 
+    #Adding the chunks and headers to a list using pointstruct
     points.append (
       PointStruct(
         id = i,
