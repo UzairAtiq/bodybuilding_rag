@@ -1,4 +1,3 @@
-from loaders import load_book
 import re
 
 def clean_text(text: str) -> str:
