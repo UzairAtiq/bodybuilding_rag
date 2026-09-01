@@ -3,9 +3,8 @@ from app.ingestion.chunker import chunk_document
 from app.ingestion.loaders import load_book
 from app.ingestion.indexer import indexer 
 from app.ingestion.cleaner import clean_text
+from app.config import collection_name
 
-#Collection name 
-collection_name = "Bodybuilder Rag"
 
 #Getting the file path
 file_path = Path("/Users/uzair/Developer/Muscle_Info_RAG/data/raw/joe-weider-s-bodybuilding-system-joe-weider-2929.md")
