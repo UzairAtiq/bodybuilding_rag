@@ -16,11 +16,4 @@ def chunk_document (cleaned_text : str) -> str :
   #Splitting the text based on headers
   md_header_splits = markdown_splitter.split_text(cleaned_text)
 
-
-  #Printing the chunks prodcued 
-  for chunk in md_header_splits :
-    print("TEXT:", chunk.page_content)
-
-    print("METADATA:", chunk.metadata)
-
-    print("---")
+  return md_header_splits
