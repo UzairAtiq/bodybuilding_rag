@@ -8,7 +8,8 @@ client = QdrantClient(url=QDRANT_URL)
 #Sentence transformer model
 model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
-def retrieve(query :str, top_k = 3) :
+def retrieve(query :str, top_k = 5) :
+  print("Retrieving chunks")
 
   #Embedding the query
   query_encoded = model.encode(query)
