@@ -4,14 +4,11 @@ from sentence_transformers import CrossEncoder
 #Setting up the reranker model
 model = CrossEncoder("tomaarsen/reranker-ModernBERT-base-gooaq-bce")
 
-#Test query
-query = "WHat is a good training routine for a beginner"
-
-
-#Getting the response from the retriever
-chunks = retrieve(query)
 
 def reranker(query,chunks) :
+
+  print("Reranking chunks")
+
   #Making pairs of query and chunk
 
   pairs = [(query , chunk.payload["text"]) for chunk in chunks]
@@ -26,7 +23,6 @@ def reranker(query,chunks) :
         reverse=True
     )
 
-  print(ranked)
-  return [chunk for chunk, score in ranked]
+  #Returining only the top 3 reranked chunks
+  return [chunk for chunk, score in ranked[:3]]
 
-reranker(query,chunks)
