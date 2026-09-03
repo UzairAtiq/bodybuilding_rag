@@ -14,10 +14,16 @@ def pipeline (query : str) :
   #Building the prompt
   prompt = build_prompt(query,reranked_chunks)
   
-  #Sending the prompt to the llmm and getting answer
+  # print("prompt\n\n")
+  # print(prompt)
+  # print("Prompt Length:\n\n")
+  # print(len(prompt))
+
+  # Sending the prompt to the llmm and getting answer
   answer = send_prompt(prompt)
 
   return answer
+
 
 
 answer = pipeline(query="What are good exercises for a beginner?")
