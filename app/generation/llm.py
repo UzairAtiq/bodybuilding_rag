@@ -1,10 +1,9 @@
-from app.generation.prompt import build_prompt
-from langchain_ollama import ChatOllama
+from langchain_groq import ChatGroq
 
-llm = ChatOllama(
-  model= "qwen3.5:4b",
-  num_ctx=16384,
-  num_predict=-1
+# Initialize Groq LLM
+llm = ChatGroq(
+    model="openai/gpt-oss-120b",
+    temperature=0.7
 )
 
 def send_prompt (prompt : str) :
