@@ -2,9 +2,15 @@ from qdrant_client import QdrantClient , models
 from app.config import QDRANT_URL
 from app.config import collection_name
 from sentence_transformers import SentenceTransformer
+from app.config import QDRANT_API_KEY
 
 #Setting up qdrant client
-client = QdrantClient(url=QDRANT_URL)
+  #Setting up Qdrant client
+client = QdrantClient(
+    url="https://dbe2bf6d-235f-4427-9c81-e0fe28df5f65.australia-southeast1-0.gcp.cloud.qdrant.io",
+    api_key=QDRANT_API_KEY,
+    cloud_inference=True
+)
 #Sentence transformer model
 model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
