@@ -3,7 +3,8 @@ from langchain_ollama import ChatOllama
 
 llm = ChatOllama(
   model= "qwen3.5:4b",
-  num_ctx=8192
+  num_ctx=16384,
+  num_predict=-1
 )
 
 def send_prompt (prompt : str) :
