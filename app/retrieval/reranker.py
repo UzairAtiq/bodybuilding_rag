@@ -24,5 +24,5 @@ def reranker(query,chunks) :
     )
 
   #Returining only the top 3 reranked chunks
-  return [chunk for chunk, score in ranked[:3]]
+  return [chunk for chunk, score in ranked[:2]]
 
