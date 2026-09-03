@@ -2,13 +2,17 @@ from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams,PointStruct
 from app.config import QDRANT_URL
-
+from app.config import QDRANT_API_KEY
 
 
 def indexer(chunked_text,name) :
 
   #Setting up Qdrant client
-  client = QdrantClient(url=QDRANT_URL)
+  client = QdrantClient(
+    url="https://dbe2bf6d-235f-4427-9c81-e0fe28df5f65.australia-southeast1-0.gcp.cloud.qdrant.io",
+    api_key=QDRANT_API_KEY,
+    cloud_inference=True
+)
 
   #Creeating Qdrant collection if it does not exsist
   if not client.collection_exists ( name ) :
