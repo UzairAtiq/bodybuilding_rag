@@ -27,7 +27,7 @@ def pipeline (query : str , debug : bool = False) :
   if debug == True :
     chunk_info = [
     {
-       "header": chunk.payload.get("header", "N/A"), "score": chunk.score
+       "header": chunk.payload.get("header", "N/A"), "score": chunk.score , "Book" : chunk.payload.get("doc_id")
     }
     for chunk in reranked_chunks
 ]
