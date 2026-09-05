@@ -3,9 +3,11 @@ from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams,PointStruct
 from app.config import QDRANT_URL
 from app.config import QDRANT_API_KEY
+from uuid import uuid5 , NAMESPACE_DNS
 
 
-def indexer(chunked_text,name) :
+
+def indexer(chunked_text,name,book_id) :
 
   #Setting up Qdrant client
   client = QdrantClient(
@@ -41,8 +43,8 @@ def indexer(chunked_text,name) :
     #Adding the chunks and headers to a list using pointstruct
     points.append (
       PointStruct(
-        id = i,
-        vector = emebeddings.tolist() , payload= {"text" : page_content , "header" : header}
+        id = str(uuid5(NAMESPACE_DNS , f"{book_id}_{i}")),
+        vector = emebeddings.tolist() , payload= {"text" : page_content , "header" : header , "doc_id" : book_id}
       )
     )
 
