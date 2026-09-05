@@ -6,6 +6,8 @@ from app.config import QDRANT_API_KEY
 
 #Setting up qdrant client
   #Setting up Qdrant client
+
+  
 client = QdrantClient(
     url="https://dbe2bf6d-235f-4427-9c81-e0fe28df5f65.australia-southeast1-0.gcp.cloud.qdrant.io",
     api_key=QDRANT_API_KEY,
