@@ -1,29 +1,33 @@
 [
   {
     "question": "How should a beginner break into a weight training program to avoid soreness or injury?",
-    "answer": "**Break\u2011in plan for a beginner**\n\n1. **Start with only one set per exercise** \u2013 do this for your very first workout and keep it for the entire first week, using light weights.  \n\n2. **Continue the one\u2011set approach for the first month** \u2013 each workout should still be just a single set of each movement.  \n\n3. **Gradually add a second set** \u2013 in the second month begin working toward the full two\u2011set routine.  \n\n4. **Timing for a full program**  \n   * If you\u2019re already in good physical condition you may move to the complete program by the **third week**.  \n   * If you need more time, allow **four to eight weeks** before attempting the full schedule.  \n\n5. **Don\u2019t increase weight or add sets too quickly** \u2013 wait until at least the **fourth week** before raising the load, and only add sets once your strength and endurance can handle them.  \n\n6. **Adjust any painful exercise** \u2013 reduce the weight by **25\u201130\u202f%** and retry, working the load up slowly. Use even lighter weight if the recommended lightest poundage still feels heavy.  \n\n7. **Warm\u2011up, cool\u2011down, and recovery** \u2013 always warm up before and stretch after each session; use heat, cold therapy, and post\u2011workout stretching to keep soreness minimal.  \n\n8. **Breathing technique** \u2013 inhale while lowering the weight and exhale while raising it; this helps prevent fainting and injury.  \n\n9. **Track your work** \u2013 keep a notebook of reps and weights so you can see progress and avoid overtraining.  \n\nFollowing these steps\u2014starting with one light set, progressing slowly, avoiding premature weight or set increases, and using proper warm\u2011up, breathing, and recovery practices\u2014will keep muscle soreness low and reduce the risk of injury.",
+    "answer": "A beginner should:\n\n1. **Start with only one set per exercise** and use light weights on the first workout.  \n2. **Continue doing just one set per movement for the entire first week** of training.  \n3. **Add a second set only after the first month** (the \u201csecond month\u201d in the plan), and only if strength and endurance have increased enough.  \n4. **Do not increase the weight until after the fourth week** of training; adding weight or extra sets too quickly can cause poor technique and injury.  \n5. **Take a full week to \u201cbreak into\u201d any new routine** before adding more volume or load.  \n6. **Warm\u2011up before and cool\u2011down after each session**, and use stretching, heat/cold therapy, or post\u2011workout rubs to keep soreness low.  \n7. **Breathe correctly** \u2013 inhale while lowering the weight and exhale while lifting \u2013 to avoid fainting or injury.  \n\nFollowing these steps lets a beginner progress safely while minimizing muscle soreness and injury risk.",
     "retrieved_chunks": [
       {
         "header": "GETTING A HEAD START I know you're anxious to get right down to the serious job of > BREAKING IN",
-        "score": 0.61207926
+        "score": 0.61207926,
+        "Book": "Joe_weider_Book"
       },
       {
         "header": "GETTING A HEAD START I know you're anxious to get right down to the serious job of > HOW TO EXERCISE",
-        "score": 0.6026366
+        "score": 0.6026366,
+        "Book": "Joe_weider_Book"
       }
     ]
   },
   {
     "question": "What is the recommended number of sets to perform during the first week and first month of training?",
-    "answer": "**First week:**\u202fDo **one set** of each exercise (one set per movement).  \n\n**First month:**\u202fContinue with **one set** of each exercise (the program calls for a single set of eight repetitions for every exercise during the first month).",
+    "answer": "**First week:**\u202fPerform **one set** of each exercise (with light weight).  \n\n**First month:**\u202fContinue with **one set** of each exercise (the program calls for a single set, eight repetitions, during the entire first month).",
     "retrieved_chunks": [
       {
         "header": "GETTING A HEAD START I know you're anxious to get right down to the serious job of > BREAKING IN",
-        "score": 0.65757775
+        "score": 0.65757775,
+        "Book": "Joe_weider_Book"
       },
       {
         "header": "Joe weidery SYSTEM > GETTING UNDER WAY There are 15 basic movements in your beginning bodybuilding > EXERCISE GUIDE",
-        "score": 0.6640804
+        "score": 0.6640804,
+        "Book": "Joe_weider_Book"
       }
     ]
   },
@@ -33,81 +37,93 @@
     "retrieved_chunks": [
       {
         "header": "Joe weidery SYSTEM > Now that you have satisfactorily completed my split system of > CHART 6-INSTRUCTIONS",
-        "score": 0.62454164
+        "score": 0.62454164,
+        "Book": "Joe_weider_Book"
       },
       {
         "header": "Joe weidery SYSTEM > TIPS > CHART 1-INSTRUCTIONS",
-        "score": 0.69370246
+        "score": 0.69370246,
+        "Book": "Joe_weider_Book"
       }
     ]
   },
   {
     "question": "How many sets and reps are prescribed for bench presses in Chart 4's Monday upper body workout?",
-    "answer": "The chart calls for **4\u202f\u2013\u202f5 sets of 6 repetitions** for the bench\u2011press exercise on the Monday upper\u2011body workout.",
+    "answer": "The chart prescribes **4\u202f\u2013\u202f5 sets of 6 repetitions** for the bench\u2011press exercise.",
     "retrieved_chunks": [
       {
         "header": "Joe weidery SYSTEM > Now that you have satisfactorily completed my split system of > CHART 6-POWER AND BULK ROUTINES EXERCISES",
-        "score": 0.6506108
+        "score": 0.6506108,
+        "Book": "Joe_weider_Book"
       },
       {
         "header": "Joe weidery SYSTEM > This chapter introduces you to a very important concept that will > Bench Press",
-        "score": 0.65045553
+        "score": 0.65045553,
+        "Book": "Joe_weider_Book"
       }
     ]
   },
   {
     "question": "What is the correct starting position for close-grip bench presses?",
-    "answer": "The correct starting position for close\u2011grip bench presses is to **take a narrow over\u2011hand grip on the bar (about 4\u20116\u202finches between your index fingers), lie flat on a bench with your feet flat on the floor for stability, and extend your arms straight upward from your shoulders, holding the bar directly above your chest.**",
+    "answer": "The starting position for close\u2011grip bench presses is to:\n\n- Take a narrow over\u2011hand grip on the barbell (about 4\u20116\u202finches between your index fingers).  \n- Lie flat on a bench, lying on your back.  \n- Keep your feet flat on the floor for balance.  \n- Extend your arms straight upward from your shoulders, holding the bar directly above your chest.",
     "retrieved_chunks": [
       {
         "header": "Joe weidery SYSTEM > 7. Seated Dumbbell Curls 3 9",
-        "score": 0.48070425
+        "score": 0.48070425,
+        "Book": "Joe_weider_Book"
       },
       {
         "header": "Joe weidery SYSTEM > TIPS > CHART 1-INSTRUCTIONS",
-        "score": 0.63736844
+        "score": 0.63736844,
+        "Book": "Joe_weider_Book"
       }
     ]
   },
   {
     "question": "What is emphasized when performing lateral raises with bent arms and rotated hands?",
-    "answer": "The movement is meant to stress the **lateral (side) head of the deltoid**.",
+    "answer": "The movement places special emphasis on the **lateral (side) head of the deltoid**.",
     "retrieved_chunks": [
       {
         "header": "Joe weidery SYSTEM > PecS > External Obliques Obliques",
-        "score": 0.5428644
+        "score": 0.5428644,
+        "Book": "Joe_weider_Book"
       },
       {
         "header": "Joe weidery SYSTEM > PecS",
-        "score": 0.4982723
+        "score": 0.4982723,
+        "Book": "Joe_weider_Book"
       }
     ]
   },
   {
     "question": "What exercises are grouped as supersets in the Monday upper body workout?",
-    "answer": "**Monday upper\u2011body supersets**\n\n| Superset | Exercise 1 (sets\u202f\u00d7\u202freps) | Exercise 2 (sets\u202f\u00d7\u202freps) |\n|----------|--------------------------|--------------------------|\n| 1 | Bench Presses \u2013 3\u202f\u00d7\u202f8\u201112 | Military Presses \u2013 3\u202f\u00d7\u202f12 |\n| 2 | Bent\u2011Over Rows \u2013 3\u202f\u00d7\u202f8 | Bent\u2011Arm Pullovers \u2013 2\u202f\u00d7\u202f8\u201112 |\n| 3 | Lateral Raises \u2013 2\u202f\u00d7\u202f8\u201112 | Upright Rows \u2013 2\u202f\u00d7\u202f15 |\n| 4 | Barbell Curls \u2013 2\u202f\u00d7\u202f12 | Squats \u2013 3\u202f\u00d7\u202f10 |\n\nThese four pairings are the exercises that are grouped together as supersets in the Monday upper\u2011body workout.",
+    "answer": "**Supersets in the Monday upper\u2011body workout**\n\nThe Monday upper\u2011body routine pairs the following exercises as supersets:\n\n| Superset | Exercise\u202f1 | Exercise\u202f2 |\n|----------|------------|------------|\n| **Superset\u202f1** | Bench Presses (A) \u2013 3\u202fsets\u202f\u00d7\u202f8\u201112\u202freps | Dumbbell Flyes (F) \u2013 3\u202fsets\u202f\u00d7\u202f8\u201112\u202freps |\n| **Superset\u202f2** | Military Presses (B) \u2013 3\u202fsets\u202f\u00d7\u202f12\u202freps | Lateral Raises (E) \u2013 2\u202fsets\u202f\u00d7\u202f8\u201112\u202freps |\n| **Superset\u202f3** | Bent\u2011Over Rows (C) \u2013 3\u202fsets\u202f\u00d7\u202f8\u201112\u202freps | Upright Rows (F) \u2013 2\u202fsets\u202f\u00d7\u202f15\u202freps |\n| **Superset\u202f4** | Bent\u2011Arm Pullovers (D) \u2013 2\u202fsets\u202f\u00d7\u202f8\u201112\u202freps | Barbell Curls (G) \u2013 2\u202fsets\u202f\u00d7\u202f12\u202freps |\n\nThese pairings are the only groups in the provided schedule that are listed together under the Monday upper\u2011body section, indicating they are intended to be performed as supersets.",
     "retrieved_chunks": [
       {
         "header": "Joe weidery SYSTEM > 3 Days Per Week",
-        "score": 0.63790286
+        "score": 0.63790286,
+        "Book": "Joe_weider_Book"
       },
       {
         "header": "Joe weidery SYSTEM",
-        "score": 0.6435418
+        "score": 0.6435418,
+        "Book": "Joe_weider_Book"
       }
     ]
   },
   {
     "question": "What muscles are targeted by close-grip bench presses?",
-    "answer": "Close\u2011grip bench presses primarily work the **inner portion of the pectoral muscles**, the **anterior (front) deltoids**, and the **triceps**.",
+    "answer": "Close\u2011grip bench presses primarily work the **inner portion of the pectoral muscles**, along with the **anterior (front) deltoids** and the **triceps**.",
     "retrieved_chunks": [
       {
         "header": "Joe weidery SYSTEM > 7. Seated Dumbbell Curls 3 9",
-        "score": 0.5341401
+        "score": 0.5341401,
+        "Book": "Joe_weider_Book"
       },
       {
         "header": "Joe weidery SYSTEM > THE SPLIT SYSTEM At this point in your training, you're ready to take another step > Monday (1-11 Exercises) Sets Reps",
-        "score": 0.5731349
+        "score": 0.5731349,
+        "Book": "Joe_weider_Book"
       }
     ]
   }
