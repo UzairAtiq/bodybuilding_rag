@@ -6,6 +6,8 @@ from app.ingestion.cleaner import clean_text
 from app.config import collection_name
 
 
+book_1 = "Joe_weider_Book"
+
 #Getting the file path
 file_path = Path("/Users/uzair/Developer/Muscle_Info_RAG/data/raw/joe-weider-s-bodybuilding-system-joe-weider-2929.md")
 
@@ -19,4 +21,4 @@ cleaned_text = clean_text(loaded_book)
 chunked_document = chunk_document(cleaned_text)
 
 #embed the chunks and push to quadrant
-indexer(chunked_document,collection_name)
+indexer(chunked_document,collection_name,book_1)
