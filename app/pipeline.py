@@ -14,12 +14,6 @@ def pipeline (query : str , debug : bool = False) :
   #Building the prompt
   prompt = build_prompt(query,reranked_chunks)
 
-
-  # print("prompt\n\n")
-  # print(prompt)
-  # print("Prompt Length:\n\n")
-  # print(len(prompt))
-
   # Sending the prompt to the llmm and getting answer
   answer = send_prompt(prompt)
 
