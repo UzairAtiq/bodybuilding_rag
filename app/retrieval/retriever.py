@@ -9,7 +9,7 @@ from app.config import QDRANT_API_KEY
 
   
 client = QdrantClient(
-    url="https://dbe2bf6d-235f-4427-9c81-e0fe28df5f65.australia-southeast1-0.gcp.cloud.qdrant.io",
+    url=QDRANT_URL,
     api_key=QDRANT_API_KEY,
     cloud_inference=True
 )
