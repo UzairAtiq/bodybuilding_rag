@@ -123,20 +123,17 @@ export const App: React.FC = () => {
       // step 2: switch to 'Generating output...' status
       set_query_status('generating')
 
-      // invoke backend api or handle connection
+      // invoke backend api
       let response_text = ''
       try {
         response_text = await send_ask_query(query)
       } catch (err: unknown) {
-        const error_message = err instanceof Error ? err.message : 'Unknown error'
-        console.warn('Backend request note:', error_message)
+        const error_message = err instanceof Error ? err.message : 'Unknown connection error'
+        console.error('Backend request failed:', error_message)
         response_text =
-          `Note: Could not reach backend server directly (${error_message}).\n\n` +
-          `Make sure the FastAPI server is running with:\n` +
-          `uvicorn app.api.routes:app --host 0.0.0.0 --port 8000\n\n` +
-          `Example Grounded Answer:\n` +
-          `"Start with only one set per exercise with light weights for the entire first week. ` +
-          `Do not increase weight until after the fourth week of training to avoid injury and master form."`
+          `⚠️ Unable to reach the Fitness Bot API (${error_message}).\n\n` +
+          `Please make sure the FastAPI server is running with:\n` +
+          `uvicorn app.api.routes:app --host 0.0.0.0 --port 8000`
       }
 
       // step 3: response arrival -> append assistant message and trigger fast typewriter reveal

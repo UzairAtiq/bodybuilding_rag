@@ -7,15 +7,31 @@ interface AskResponse {
 
 // send user query to the rag backend
 export async function send_ask_query(query: string): Promise<string> {
-  const endpoint = `${backend_url}/ask`
+  const direct_endpoint = `${backend_url}/ask`
 
-  const response = await fetch(endpoint, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ query }),
-  })
+  let response: Response
+  try {
+    response = await fetch(direct_endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query }),
+    })
+  } catch (network_err) {
+    // fallback to vite dev proxy in case direct localhost connection fails
+    try {
+      response = await fetch('/ask', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query }),
+      })
+    } catch {
+      throw network_err
+    }
+  }
 
   if (!response.ok) {
     const error_text = await response.text().catch(() => 'unknown server error')
