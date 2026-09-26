@@ -1,0 +1,109 @@
+@import './assets/fonts/ClashDisplay_Complete/Fonts/WEB/css/clash-display.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* css variables for dark theme with burgundy accents */
+:root {
+  --background: #0a0a0a;
+  --foreground: #f5f5f5;
+
+  --card: #121212;
+  --card-foreground: #f5f5f5;
+
+  --popover: #161616;
+  --popover-foreground: #f5f5f5;
+
+  /* burgundy accent palette */
+  --primary: #7a1f2b;
+  --primary-foreground: #ffffff;
+  --primary-hover: #932433;
+
+  --secondary: #1a1a1a;
+  --secondary-foreground: #e5e5e5;
+
+  --muted: #222222;
+  --muted-foreground: #8a8a8a;
+
+  --accent: #7a1f2b;
+  --accent-foreground: #ffffff;
+
+  --border: #242424;
+  --input: #1a1a1a;
+  --ring: #7a1f2b;
+
+  --font-display: 'ClashDisplay-Variable', 'ClashDisplay-Bold', 'Bricolage Grotesque', 'Space Grotesk', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+}
+
+/* prominent glowing caret color for text input active states */
+input, textarea {
+  caret-color: #fca5a5;
+}
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d0d0d;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7a1f2b;
+}
+
+/* staggered page entrance animations */
+@keyframes reveal-sidebar {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes reveal-header {
+  0% {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-chatbox {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-reveal-sidebar {
+  animation: reveal-sidebar 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-reveal-header {
+  animation: reveal-header 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+  opacity: 0;
+}
+
+.animate-reveal-chatbox {
+  animation: reveal-chatbox 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  opacity: 0;
+}

@@ -80,13 +80,25 @@ This chunks the source markdown, embeds it, and pushes it into your Qdrant colle
 uvicorn app.api.routes:app --host 0.0.0.0 --port 8000
 ```
 
-Then query it:
+Then query it directly or via the frontend:
 
 ```bash
 curl -X POST "http://localhost:8000/ask" \
   -H "Content-Type: application/json" \
   -d '{"query": "What are good exercises for a beginner?"}'
 ```
+
+### 6. Run the Frontend
+
+In a separate terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open `http://localhost:5173` to interact with the high-impact Fitness Bot UI.
 
 ## Running with Docker
 
@@ -113,12 +125,18 @@ On the 8-question evaluation, most answers were grounded in the retrieved source
 
 ```
 app/
-  api/            → FastAPI routes
+  api/            → FastAPI routes (with CORS enabled)
   generation/     → prompt building and LLM calls
   ingestion/      → loaders, cleaning, chunking, indexing
   retrieval/      → retriever and reranker
   config.py
   pipeline.py
+frontend/         → React + Vite + Tailwind + shadcn/ui interface
+  src/
+    components/   → Header, Sidebar, Chatbox, CarouselBanner, UI primitives
+    hooks/        → fast typewriter effect hook
+    services/     → API client connecting to FastAPI /ask
+    types/        → message, session, and status types
 scripts/
   ingest.py       → run the ingestion pipeline
   evaluate.py     → run the evaluation questions
