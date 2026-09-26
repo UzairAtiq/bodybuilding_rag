@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from app.pipeline import pipeline
-from app.generation.llm import is_token_limit_text, TOKEN_LIMIT_MESSAGE
+from app.generation.llm import is_token_limit_error, TOKEN_LIMIT_MESSAGE
 
 # initialize fastapi app
 app = FastAPI(title="Fitness Bot API")
@@ -33,11 +33,6 @@ def ask(request: QueryRequest):
 
     try:
         answer = pipeline(cleaned_query)
-
-        # guardrail: check if response text signals token exhaustion
-        if is_token_limit_text(answer):
-            return {"answer": TOKEN_LIMIT_MESSAGE}
-
         return {"answer": answer}
     except Exception as pipeline_err:
         err_msg = str(pipeline_err)
@@ -53,8 +48,8 @@ def ask(request: QueryRequest):
                 )
             }
 
-        # handle token quota and rate limit errors
-        if is_token_limit_text(err_msg):
+        # handle groq token limit and rate limit errors
+        if is_token_limit_error(pipeline_err):
             return {"answer": TOKEN_LIMIT_MESSAGE}
 
         return {"answer": f"⚠️ An error occurred during retrieval or generation:\n\n{err_msg}"}
