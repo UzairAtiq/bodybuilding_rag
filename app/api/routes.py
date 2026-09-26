@@ -30,5 +30,19 @@ def ask(request: QueryRequest):
     if not cleaned_query:
         return {"answer": "Please provide a training, workout, or nutrition question."}
 
-    answer = pipeline(cleaned_query)
-    return {"answer": answer}
+    try:
+        answer = pipeline(cleaned_query)
+        return {"answer": answer}
+    except Exception as pipeline_err:
+        err_msg = str(pipeline_err)
+        print(f"pipeline query failed: {err_msg}")
+        if "Connection reset by peer" in err_msg or "ResponseHandlingException" in err_msg:
+            return {
+                "answer": (
+                    "⚠️ **Could not connect to Qdrant Cloud**:\n\n"
+                    "The remote Qdrant Cloud cluster reset the connection (`[Errno 54] Connection reset by peer`).\n\n"
+                    "Please check your cluster status at [cloud.qdrant.io](https://cloud.qdrant.io) to ensure the cluster is active (not paused or hibernated)."
+                )
+            }
+        return {"answer": f"⚠️ An error occurred during retrieval or generation:\n\n{err_msg}"}
+
