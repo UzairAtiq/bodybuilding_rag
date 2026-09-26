@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from app.pipeline import pipeline
+from app.generation.llm import is_token_limit_error, TOKEN_LIMIT_MESSAGE
 
 # initialize fastapi app
 app = FastAPI(title="Fitness Bot API")
@@ -36,6 +37,8 @@ def ask(request: QueryRequest):
     except Exception as pipeline_err:
         err_msg = str(pipeline_err)
         print(f"pipeline query failed: {err_msg}")
+
+        # handle qdrant cloud connection resets
         if "Connection reset by peer" in err_msg or "ResponseHandlingException" in err_msg:
             return {
                 "answer": (
@@ -44,5 +47,9 @@ def ask(request: QueryRequest):
                     "Please check your cluster status at [cloud.qdrant.io](https://cloud.qdrant.io) to ensure the cluster is active (not paused or hibernated)."
                 )
             }
-        return {"answer": f"⚠️ An error occurred during retrieval or generation:\n\n{err_msg}"}
 
+        # handle groq token limit and rate limit errors
+        if is_token_limit_error(pipeline_err):
+            return {"answer": TOKEN_LIMIT_MESSAGE}
+
+        return {"answer": f"⚠️ An error occurred during retrieval or generation:\n\n{err_msg}"}
