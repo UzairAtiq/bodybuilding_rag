@@ -44,7 +44,7 @@ export const ChatStatusIndicator: React.FC<ChatStatusIndicatorProps> = ({
             </Badge>
 
             <span className="text-[11px] text-muted-foreground font-mono">
-              {status === 'sending' ? 'Connecting to pipeline' : 'Retrieving Weider corpus'}
+              {status === 'sending' ? 'Connecting to pipeline' : 'Retrieving knowledge corpus'}
             </span>
           </div>
 

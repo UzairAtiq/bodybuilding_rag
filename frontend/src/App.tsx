@@ -134,7 +134,7 @@ export const App: React.FC = () => {
           `Note: Could not reach backend server directly (${error_message}).\n\n` +
           `Make sure the FastAPI server is running with:\n` +
           `uvicorn app.api.routes:app --host 0.0.0.0 --port 8000\n\n` +
-          `Example Grounded Answer from Joe Weider's System:\n` +
+          `Example Grounded Answer:\n` +
           `"Start with only one set per exercise with light weights for the entire first week. ` +
           `Do not increase weight until after the fourth week of training to avoid injury and master form."`
       }

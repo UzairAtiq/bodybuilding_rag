@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Send, CornerDownLeft, Sparkles } from 'lucide-react'
+import { Send, CornerDownLeft } from 'lucide-react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Card } from './ui/card'
@@ -11,7 +11,7 @@ interface ChatInputProps {
   status: QueryStatus
 }
 
-// chat input bar docked at the bottom of the screen
+// chat input bar supporting centered placement or docked bottom view
 export const ChatInput: React.FC<ChatInputProps> = ({ on_send, status }) => {
   const [query_text, set_query_text] = useState('')
   const [is_focused, set_is_focused] = useState(false)
@@ -58,26 +58,16 @@ export const ChatInput: React.FC<ChatInputProps> = ({ on_send, status }) => {
             placeholder={
               is_focused
                 ? 'Type your bodybuilding query...'
-                : 'Ask about exercises, sets, reps, or Weider principles...'
+                : 'Ask about exercises, sets, reps, nutrition, or training protocols...'
             }
             disabled={is_busy}
             className={cn(
-              'pr-20 h-12 text-sm transition-all duration-200',
+              'pr-4 h-12 text-sm transition-all duration-200',
               is_focused
                 ? 'border-[#7a1f2b] bg-[#181818]'
                 : 'border-border bg-[#141414]'
             )}
           />
-
-          {/* active indicator when input is focused */}
-          {is_focused && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5 pointer-events-none">
-              <span className="h-2 w-2 rounded-full bg-[#fca5a5]" />
-              <span className="text-[10px] font-mono font-bold text-[#fca5a5] tracking-widest uppercase">
-                ACTIVE
-              </span>
-            </div>
-          )}
         </div>
 
         <Button
@@ -94,9 +84,6 @@ export const ChatInput: React.FC<ChatInputProps> = ({ on_send, status }) => {
       <div className="flex items-center justify-between px-2 pt-2 text-[10px] text-muted-foreground font-mono">
         <span className="flex items-center gap-1">
           <CornerDownLeft className="h-3 w-3" /> Press Enter to send
-        </span>
-        <span className={cn('transition-colors', is_focused ? 'text-[#fca5a5]' : 'text-[#a8a8a8]')}>
-          {is_focused ? '● Consultation Input Active' : "Grounded on Joe Weider's Bodybuilding System"}
         </span>
       </div>
     </Card>

@@ -78,7 +78,7 @@ export const ChatMessage: React.FC<ChatMessageProps> = ({
                     : 'bg-[#7a1f2b]/20 text-[#fca5a5] border-[#7a1f2b]/40'
                 )}
               >
-                {is_user ? 'ATHLETE QUERY' : 'WEIDER ORACLE'}
+                {is_user ? 'ATHLETE QUERY' : 'FITNESS AI'}
               </Badge>
               <span className="text-[10px] text-muted-foreground font-mono">
                 {message.timestamp}
