@@ -36,6 +36,11 @@
   --font-body: 'Space Grotesk', sans-serif;
 }
 
+/* prominent glowing caret color for text input active states */
+input, textarea {
+  caret-color: #fca5a5;
+}
+
 /* custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
