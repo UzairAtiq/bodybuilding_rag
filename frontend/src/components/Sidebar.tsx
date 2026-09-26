@@ -40,13 +40,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* sidebar panel */}
       <aside
         className={cn(
-          'animate-reveal-sidebar fixed lg:static top-0 bottom-0 left-0 z-40 flex flex-col h-full bg-[#0d0d0d] border-r border-border transition-all duration-300 ease-in-out',
+          'fixed lg:static top-0 bottom-0 left-0 z-40 flex flex-col h-full bg-[#0d0d0d] transition-all duration-300 ease-in-out overflow-hidden',
           is_open
-            ? 'w-72 sm:w-80 translate-x-0'
-            : '-translate-x-full lg:w-0 lg:opacity-0 lg:pointer-events-none'
+            ? 'w-72 sm:w-80 border-r border-border opacity-100 translate-x-0'
+            : 'w-0 border-r-0 opacity-0 pointer-events-none -translate-x-full lg:translate-x-0'
         )}
       >
-        {/* sidebar top action */}
+        <div className="w-72 sm:w-80 flex flex-col h-full shrink-0">
+          {/* sidebar top action */}
         <div className="p-4 border-b border-border/80 flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -145,6 +146,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </p>
             </div>
           </div>
+        </div>
         </div>
       </aside>
     </>
