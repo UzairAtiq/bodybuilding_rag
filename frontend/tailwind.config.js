@@ -34,7 +34,6 @@ export default {
         accent: {
           DEFAULT: 'var(--accent)',
           foreground: 'var(--accent-foreground)',
-          glow: 'var(--accent-glow)',
         },
         border: 'var(--border)',
         input: 'var(--input)',
@@ -57,16 +56,11 @@ export default {
           '0%': { opacity: '0', transform: 'translateX(-20px)' },
           '100%': { opacity: '1', transform: 'translateX(0)' },
         },
-        'pulse-glow': {
-          '0%, 100%': { opacity: '0.4' },
-          '50%': { opacity: '0.9' },
-        },
       },
       animation: {
         'slide-down': 'slide-down 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         'fade-in': 'fade-in 0.35s ease-out forwards',
         'stagger-slide': 'stagger-slide 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
     },
   },

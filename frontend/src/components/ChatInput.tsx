@@ -38,17 +38,15 @@ export const ChatInput: React.FC<ChatInputProps> = ({ on_send, status }) => {
   return (
     <Card
       className={cn(
-        'w-full bg-[#0d0d0d]/90 backdrop-blur-md border p-2 sm:p-3 shadow-xl transition-all duration-200',
-        is_focused
-          ? 'border-[#7a1f2b]/80 shadow-[0_0_25px_rgba(122,31,43,0.25)]'
-          : 'border-border/90'
+        'w-full bg-[#0d0d0d]/90 backdrop-blur-md border p-2 sm:p-3 transition-all duration-200',
+        is_focused ? 'border-[#7a1f2b]/80' : 'border-border/90'
       )}
     >
       <form onSubmit={handle_submit} className="flex items-center gap-2">
         <div
           className={cn(
             'relative flex-1 rounded-lg transition-all duration-200',
-            is_focused && 'ring-2 ring-[#7a1f2b] shadow-[0_0_18px_rgba(122,31,43,0.35)]'
+            is_focused && 'ring-1 ring-[#7a1f2b]'
           )}
         >
           <Input
@@ -71,13 +69,10 @@ export const ChatInput: React.FC<ChatInputProps> = ({ on_send, status }) => {
             )}
           />
 
-          {/* animated active cursor pulse badge when input is focused */}
+          {/* active indicator when input is focused */}
           {is_focused && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5 pointer-events-none animate-fade-in">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#fca5a5] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#7a1f2b]" />
-              </span>
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5 pointer-events-none">
+              <span className="h-2 w-2 rounded-full bg-[#fca5a5]" />
               <span className="text-[10px] font-mono font-bold text-[#fca5a5] tracking-widest uppercase">
                 ACTIVE
               </span>
@@ -88,7 +83,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({ on_send, status }) => {
         <Button
           type="submit"
           disabled={!query_text.trim() || is_busy}
-          className="h-12 px-5 font-display font-bold tracking-tight bg-primary hover:bg-primary-hover shadow-md flex items-center gap-2 shrink-0"
+          className="h-12 px-5 font-display font-bold tracking-tight bg-primary hover:bg-primary-hover flex items-center gap-2 shrink-0 border border-[#912534]/40"
         >
           <span className="hidden sm:inline">CONSULT</span>
           <Send className="h-4 w-4" />

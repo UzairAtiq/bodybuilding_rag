@@ -1,3 +1,4 @@
+@import './assets/fonts/ClashDisplay_Complete/Fonts/WEB/css/clash-display.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -26,13 +27,12 @@
 
   --accent: #7a1f2b;
   --accent-foreground: #ffffff;
-  --accent-glow: rgba(122, 31, 43, 0.35);
 
   --border: #242424;
   --input: #1a1a1a;
   --ring: #7a1f2b;
 
-  --font-display: 'Bricolage Grotesque', 'Space Grotesk', sans-serif;
+  --font-display: 'ClashDisplay-Variable', 'ClashDisplay-Bold', 'Bricolage Grotesque', 'Space Grotesk', sans-serif;
   --font-body: 'Space Grotesk', sans-serif;
 }
 

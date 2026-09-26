@@ -37,18 +37,13 @@ export const Chatbox: React.FC<ChatboxProps> = ({
           {!has_messages ? (
             /* empty state with bold presentation and topic carousel */
             <div className="flex flex-col items-center justify-center min-h-[60vh] py-8 text-center max-w-2xl mx-auto">
-              <div className="h-16 w-16 rounded-2xl bg-[#7a1f2b]/20 border border-[#7a1f2b]/50 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(122,31,43,0.3)]">
+              <div className="h-16 w-16 rounded-2xl bg-[#7a1f2b]/20 border border-[#7a1f2b]/50 flex items-center justify-center mb-6">
                 <Dumbbell className="h-8 w-8 text-[#fca5a5]" />
               </div>
 
-              <h2 className="font-display font-[900] text-3xl sm:text-4xl uppercase tracking-tight text-foreground mb-3">
-                BUILD YOUR PHYSIQUE WITH SCIENCE & VINTAGE WISDOM
+              <h2 className="font-display font-[900] text-3xl sm:text-4xl tracking-tight text-foreground mb-8">
+                Good morning Fitness enthusiast
               </h2>
-
-              <p className="font-body text-sm sm:text-base text-muted-foreground max-w-lg mb-8 leading-relaxed">
-                Directly grounded in Joe Weider's 1988 System of Bodybuilding.
-                Ask about exercise execution, beginner break-in protocols, split routines, or supersets.
-              </p>
 
               {/* topic suggestion carousel */}
               <CarouselBanner on_select_prompt={on_send_message} />
