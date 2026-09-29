@@ -10,7 +10,7 @@ RUN pip install --no-cache-dir \
     -r requirements.txt
 
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')"
-RUN python -c "from sentence_transformers import CrossEncoder; CrossEncoder('tomaarsen/reranker-ModernBERT-base-gooaq-bce')"
+RUN python -c "from sentence_transformers import CrossEncoder; CrossEncoder('cross-encoder/ms-marco-MiniLM-L-6-v2')"
 
 COPY . .
 

@@ -30,7 +30,7 @@ pipeline.py     → wires all of the above together
 ## Tech stack
 
 - **Embeddings:** sentence-transformers (`all-MiniLM-L6-v2`)
-- **Reranker:** cross-encoder (`tomaarsen/reranker-ModernBERT-base-gooaq-bce`)
+- **Reranker:** cross-encoder (`cross-encoder/ms-marco-MiniLM-L-6-v2`)
 - **Vector DB:** Qdrant Cloud
 - **LLM:** Groq (`openai/gpt-oss-120b`)
 - **Orchestration:** LangChain (LCEL-style chaining)

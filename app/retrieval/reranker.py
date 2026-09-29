@@ -1,28 +1,25 @@
-from app.retrieval.retriever import retrieve
 from sentence_transformers import CrossEncoder
 
-#Setting up the reranker model
-model = CrossEncoder("tomaarsen/reranker-ModernBERT-base-gooaq-bce")
+# initialize lightweight cpu-optimized cross-encoder
+model = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2", max_length=384)
 
 
-def reranker(query,chunks) :
+def reranker(query: str, chunks: list) -> list:
+    print("Reranking chunks with CPU-optimized cross-encoder")
 
-  print("Reranking chunks")
+    # score relevance using first 1200 characters while keeping full text in chunk payload
+    pairs = [(query, chunk.payload.get("text", "")[:1200]) for chunk in chunks]
 
-  #Making pairs of query and chunk
+    # predict ranking scores
+    scores = model.predict(pairs)
 
-  pairs = [(query , chunk.payload["text"]) for chunk in chunks]
-
-  #predicting the scores for pair of texts
-  scores = model.predict(pairs)
-
-  #Sorting the ranking from Highest to lowest
-  ranked = sorted(
+    # sort chunks from highest to lowest score
+    ranked = sorted(
         zip(chunks, scores),
         key=lambda x: x[1],
-        reverse=True
+        reverse=True,
     )
 
-  #Returining only the top 3 reranked chunks
-  return [chunk for chunk, score in ranked[:2]]
+    # return top 2 most relevant chunks
+    return [chunk for chunk, score in ranked[:2]]
 
