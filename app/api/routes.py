@@ -1,6 +1,8 @@
-from fastapi import FastAPI
+import secrets
+from fastapi import FastAPI, Header, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from app.config import SHARED_ACCESS_KEY
 from app.pipeline import pipeline
 from app.generation.llm import is_token_limit_error, TOKEN_LIMIT_MESSAGE
 
@@ -26,14 +28,39 @@ app.add_middleware(
 class QueryRequest(BaseModel):
     query: str
 
-# health check endpoint to verify backend status
+
+def check_access_authorization(x_access_key: str | None) -> None:
+    # if shared access key is configured on server, require exact match
+    if SHARED_ACCESS_KEY:
+        if not x_access_key or not secrets.compare_digest(x_access_key.strip(), SHARED_ACCESS_KEY.strip()):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid or missing access key. Please enter the correct password.",
+            )
+
+
+# health check endpoint to verify backend status (unauthenticated for monitoring)
 @app.get("/health")
 def health():
     return {"status": "ok", "service": "Fitness Bot API"}
 
+
+# quick verification endpoint for frontend access code modal
+@app.post("/verify-key")
+def verify_key(x_access_key: str | None = Header(None, alias="x-access-key")):
+    check_access_authorization(x_access_key)
+    return {"valid": True}
+
+
 # handle ask query request from frontend
 @app.post("/ask")
-def ask(request: QueryRequest):
+def ask(
+    request: QueryRequest,
+    x_access_key: str | None = Header(None, alias="x-access-key"),
+):
+    # authenticate request against shared secret
+    check_access_authorization(x_access_key)
+
     cleaned_query = request.query.strip()
     if not cleaned_query:
         return {"answer": "Please provide a training, workout, or nutrition question."}

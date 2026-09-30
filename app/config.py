@@ -8,4 +8,5 @@ collection_name = os.getenv("collection_name", "bodybuilding_rag")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROK_API_KEY = GROQ_API_KEY
+SHARED_ACCESS_KEY = os.getenv("SHARED_ACCESS_KEY")
 

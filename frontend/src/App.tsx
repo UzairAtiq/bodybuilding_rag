@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Header } from './components/Header'
 import { Sidebar } from './components/Sidebar'
 import { Chatbox } from './components/Chatbox'
-import { send_ask_query } from './services/api'
+import { AccessModal } from './components/AccessModal'
+import { send_ask_query, get_saved_access_key } from './services/api'
 import type { ChatSession, ChatMessageItem, QueryStatus } from './types/chat'
 
 // initial default chat session
@@ -15,6 +16,10 @@ const create_new_session = (): ChatSession => ({
 })
 
 export const App: React.FC = () => {
+  // access key modal state
+  const [is_access_modal_open, set_is_access_modal_open] = useState(() => !get_saved_access_key())
+  const [access_error, set_access_error] = useState('')
+
   // persistent chat sessions
   const [sessions, set_sessions] = useState<ChatSession[]>(() => {
     try {
@@ -130,10 +135,17 @@ export const App: React.FC = () => {
       } catch (err: unknown) {
         const error_message = err instanceof Error ? err.message : 'Unknown connection error'
         console.error('Backend request failed:', error_message)
-        response_text =
-          `⚠️ Unable to reach the Fitness Bot API (${error_message}).\n\n` +
-          `Please make sure the FastAPI server is running with:\n` +
-          `uvicorn app.api.routes:app --host 0.0.0.0 --port 8000`
+
+        if (error_message.includes('UNAUTHORIZED') || error_message.includes('Invalid access key')) {
+          set_access_error('Access key was rejected or expired. Please re-enter your password.')
+          set_is_access_modal_open(true)
+          response_text = '⚠️ **Access Denied**: Please enter the correct access key using the dialog prompt to continue.'
+        } else {
+          response_text =
+            `⚠️ Unable to reach the Fitness Bot API (${error_message}).\n\n` +
+            `Please make sure the FastAPI server is running with:\n` +
+            `uvicorn app.api.routes:app --host 0.0.0.0 --port 8000`
+        }
       }
 
       // step 3: response arrival -> append assistant message and trigger fast typewriter reveal
@@ -184,6 +196,7 @@ export const App: React.FC = () => {
         <Header
           on_toggle_sidebar={() => set_is_sidebar_open((prev) => !prev)}
           is_sidebar_open={is_sidebar_open}
+          on_open_access_modal={() => set_is_access_modal_open(true)}
         />
 
         <Chatbox
@@ -192,8 +205,20 @@ export const App: React.FC = () => {
           on_send_message={handle_send_message}
         />
       </div>
+
+      {/* shared access key gate modal */}
+      <AccessModal
+        is_open={is_access_modal_open}
+        on_success={() => {
+          set_is_access_modal_open(false)
+          set_access_error('')
+        }}
+        on_close={get_saved_access_key() ? () => set_is_access_modal_open(false) : undefined}
+        initial_error={access_error}
+      />
     </div>
   )
 }
 
 export default App
+
