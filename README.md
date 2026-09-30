@@ -4,6 +4,19 @@ A production-ready Retrieval-Augmented Generation (RAG) system with a high-impac
 
 ---
 
+## 🌐 Live Demo & Access
+
+The application is deployed live on AWS:
+
+👉 **[Launch Fitness Bot](https://d1kipqqm1ofiqs.cloudfront.net)**
+
+> [!NOTE]
+> **Access Protected**: To prevent unauthorized API abuse and manage upstream Groq and Qdrant Cloud rate limits, the live web interface is secured with a password-gated access screen.
+> 
+> If you are a recruiter, reviewer, or engineer evaluating this project and would like demo credentials, please contact **uzairatiq65@gmail.com** or connect via [GitHub](https://github.com/UzairAtiq) to request a guest access key.
+
+---
+
 ## Overview
 
 General-purpose large language models frequently hallucinate workout routines, blend conflicting training philosophies, or respond to out-of-scope queries. **Fitness Bot** solves this by constraining answers to Joe Weider's verified training course using dense vector embeddings in Qdrant Cloud, CPU-optimized cross-encoder reranking, and domain guardrails on Groq. The system is protected by a password-gated access barrier and served across AWS EC2, S3, and CloudFront.
@@ -28,7 +41,7 @@ General-purpose large language models frequently hallucinate workout routines, b
 | Layer | Technology | Purpose |
 | :--- | :--- | :--- |
 | **Frontend** | React 19, TypeScript, Vite 8.3 | User interface and consultation workflow |
-| **Styling & Icons** | Tailwind CSS 3.4, Lucide React | High-contrast dark theme and iconography |
+| **Styling & Icons** | Tailwind CSS 3.4, Lucide React | High-contrast dark theme and typography |
 | **Markdown** | `react-markdown`, `remark-gfm` | Structured output rendering with tables |
 | **Backend API** | FastAPI 0.141, Uvicorn | High-performance asynchronous REST API |
 | **Embeddings** | `sentence-transformers/all-MiniLM-L6-v2` | 384-dimensional dense semantic vectors |
@@ -37,7 +50,7 @@ General-purpose large language models frequently hallucinate workout routines, b
 | **LLM Inference** | Groq API (`openai/gpt-oss-120b`) | High-speed grounded response generation |
 | **Orchestration** | LangChain Core (`langchain-core` 1.6) | Prompt templating and chain orchestration |
 | **Containerization**| Docker | Container build with pre-cached model weights |
-| **Cloud Hosting** | AWS (EC2, S3, CloudFront) | Cloud deployment with CDN caching |
+| **Cloud Hosting** | AWS (EC2, S3, CloudFront) | Cloud deployment with CDN edge caching |
 
 ---
 
@@ -119,26 +132,28 @@ Muscle_Info_RAG/
 
 ---
 
-## Prerequisites
+## Getting Started
+
+### Prerequisites
 
 - **Python**: `3.12+`
 - **Node.js**: `18+` and `npm`
 - **Qdrant Cloud Account**: Active cluster and API key ([cloud.qdrant.io](https://cloud.qdrant.io/))
 - **Groq Cloud Account**: Active API key ([console.groq.com](https://console.groq.com/))
-- **(Optional) Docker**: For containerized deployment
+- **(Optional) Docker**: If running containerized
 
 ---
 
-## Installation
+### Local Installation
 
-### 1. Clone the Repository
+#### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/UzairAtiq/bodybuilding_rag.git
 cd bodybuilding_rag
 ```
 
-### 2. Set Up the Python Backend
+#### 2. Set Up the Python Backend
 
 ```bash
 python3 -m venv .venv
@@ -146,7 +161,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Set Up the Frontend
+#### 3. Set Up the React Frontend
 
 ```bash
 cd frontend
@@ -156,9 +171,9 @@ cd ..
 
 ---
 
-## Environment Variables
+### Environment Variables
 
-### Backend Configuration (`.env`)
+#### Backend Configuration (`.env`)
 
 Create a `.env` file in the project root:
 
@@ -172,9 +187,13 @@ cp .env.example .env
 | `QDRANT_API_KEY` | API authentication key for Qdrant Cloud | **Yes** | `th1s-1s-an-ap1-k3y` |
 | `collection_name`| Target Qdrant collection name | No | `bodybuilding_rag` *(default)* |
 | `GROQ_API_KEY` | Groq Cloud API key for model inference | **Yes** | `gsk_abc123...` |
-| `SHARED_ACCESS_KEY` | Secret access password required by the lock screen | **Yes** | `your-secure-access-key` |
+| `SHARED_ACCESS_KEY` | Secret password required by the lock screen and API | **Yes** | `your-secret-password` |
 
-### Frontend Configuration (`frontend/.env`)
+> [!IMPORTANT]
+> **Choosing your `SHARED_ACCESS_KEY`**:
+> For local development, set `SHARED_ACCESS_KEY` in `.env` to any password you prefer (e.g. `SHARED_ACCESS_KEY=my-local-secret`). When you launch the web app, type that exact password into the lock modal to authenticate your browser session.
+
+#### Frontend Configuration (`frontend/.env`)
 
 Create a `.env` file inside `frontend/`:
 
@@ -188,11 +207,11 @@ cp frontend/.env.example frontend/.env
 
 ---
 
-## Usage
+### Running the Application Locally
 
-### 1. Ingest Course Material into Qdrant
+#### 1. Ingest Course Material into Qdrant
 
-Ensure your raw markdown book exists in `data/raw/` (or use the included course file), then run:
+Ensure your source book exists in `data/raw/`, then run ingestion:
 
 ```bash
 python scripts/ingest.py
@@ -200,15 +219,15 @@ python scripts/ingest.py
 
 *This parses the markdown headers, generates MiniLM embeddings, and upserts point records into your Qdrant Cloud collection.*
 
-### 2. Run the Backend API
+#### 2. Start the Backend API
 
 ```bash
 uvicorn app.api.routes:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-The API will be available at `http://localhost:8000`. Swagger documentation is accessible at `http://localhost:8000/docs`.
+The API will be available at `http://localhost:8000`. Interactive OpenAPI documentation is at `http://localhost:8000/docs`.
 
-### 3. Run the Frontend Dev Server
+#### 3. Start the Frontend Dev Server
 
 In a separate terminal:
 
@@ -217,7 +236,27 @@ cd frontend
 npm run dev
 ```
 
-Open `http://localhost:5173` in your browser. Enter the `SHARED_ACCESS_KEY` when prompted by the lock modal.
+Open `http://localhost:5173` in your browser and enter your `SHARED_ACCESS_KEY` into the access modal.
+
+---
+
+### Running with Docker (Local Container)
+
+The [`Dockerfile`](Dockerfile) uses a Python 3.12 slim base and bakes in both model weights at build time so the container starts instantly without downloading from Hugging Face on cold boot:
+
+```bash
+# Build the container image
+docker build -t muscle-info-rag .
+
+# Run the container with environment variables
+docker run -d -p 8000:8000 --env-file .env --name fitness-bot-api muscle-info-rag
+```
+
+Test container reachability:
+
+```bash
+curl http://localhost:8000/health
+```
 
 ---
 
@@ -234,7 +273,7 @@ Open `http://localhost:5173` in your browser. Enter the `SHARED_ACCESS_KEY` when
 ```bash
 curl -X POST "http://localhost:8000/ask" \
   -H "Content-Type: application/json" \
-  -H "x-access-key: your-secure-access-key" \
+  -H "x-access-key: your-secret-password" \
   -d '{"query": "What exercises primarily target the triceps?"}'
 ```
 
@@ -244,26 +283,6 @@ curl -X POST "http://localhost:8000/ask" \
 {
   "answer": "### Triceps Targeted Exercises\n\n- **Close-Grip Bench Press**: Places primary mechanical tension on the inner triceps heads while minimizing shoulder involvement.\n- **Triceps Extension (Lying/Standing)**: Isolates the long head of the triceps through full elbow extension."
 }
-```
-
----
-
-## Running with Docker
-
-The [`Dockerfile`](Dockerfile) uses a Python 3.12 slim base and bakes in both model weights at build time so the container starts instantly without downloading from Hugging Face on cold boot:
-
-```bash
-# Build the container image
-docker build -t muscle-info-rag .
-
-# Run the container
-docker run -d -p 8000:8000 --env-file .env --name fitness-bot-api muscle-info-rag
-```
-
-Test container reachability:
-
-```bash
-curl http://localhost:8000/health
 ```
 
 ---
@@ -304,7 +323,9 @@ pytest
 
 ---
 
-## Deployment Architecture
+## AWS Deployment Architecture
+
+The production environment is hosted entirely on AWS:
 
 ### 1. Backend on AWS EC2
 - **Host**: Ubuntu EC2 instance running Uvicorn on port `8000`.
@@ -313,7 +334,7 @@ pytest
 
 ### 2. Frontend on AWS S3 + CloudFront
 - **Static Hosting**: The production build bundle (`frontend/dist/`) is stored in an Amazon S3 bucket.
-- **Global CDN**: Amazon CloudFront distribution (`d1kipqqm1ofiqs.cloudfront.net`) serves assets globally.
+- **Global CDN**: Amazon CloudFront distribution (`d1kipqqm1ofiqs.cloudfront.net`) serves assets globally from edge caches.
 - **Cache Optimization**:
   - `dist/assets/*` are content-hashed (`index-COc4Hb0a.js`) and cached permanently.
   - `dist/index.html` is uploaded with S3 metadata `Cache-Control: no-cache, no-store, must-revalidate` alongside HTML meta tags to ensure client browsers always fetch the latest build immediately without stale cache locks.
@@ -329,16 +350,6 @@ pytest
 
 ---
 
-## Contributing
-
-1. Fork the repository.
-2. Create a feature branch: `git checkout -b feat/your-feature-name`.
-3. Commit your changes: `git commit -m "feat: add your feature"`.
-4. Push to your branch: `git push origin feat/your-feature-name`.
-5. Open a Pull Request.
-
----
-
 ## License
 
 <!-- TODO: Specify license (e.g. MIT, Apache 2.0, or All Rights Reserved) -->
@@ -349,5 +360,6 @@ TODO
 ## Contact
 
 - **Author**: Uzair Atiq
+- **Email**: [uzairatiq65@gmail.com](mailto:uzairatiq65@gmail.com)
 - **GitHub**: [@UzairAtiq](https://github.com/UzairAtiq)
 - **Repository**: [https://github.com/UzairAtiq/bodybuilding_rag](https://github.com/UzairAtiq/bodybuilding_rag)
