@@ -35,18 +35,19 @@ export const AccessModal: React.FC<AccessModalProps> = ({
     set_error_text('')
 
     try {
-      const is_valid = await verify_access_key(trimmed)
-      if (is_valid) {
+      const result = await verify_access_key(trimmed)
+      if (result.ok) {
         set_saved_access_key(trimmed)
         on_success()
       } else {
-        set_error_text('Invalid access key. Please check your password and try again.')
+        set_error_text(result.error || 'Invalid access key. Please check your password and try again.')
       }
     } catch {
       set_error_text('Could not connect to the backend server to verify the key.')
     } finally {
       set_is_submitting(false)
     }
+
   }
 
   return (

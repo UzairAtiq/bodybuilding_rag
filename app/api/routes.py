@@ -30,9 +30,11 @@ class QueryRequest(BaseModel):
 
 
 def check_access_authorization(x_access_key: str | None) -> None:
-    # if shared access key is configured on server, require exact match
+    # if shared access key is configured on server, require exact match (normalizing quotes)
     if SHARED_ACCESS_KEY:
-        if not x_access_key or not secrets.compare_digest(x_access_key.strip(), SHARED_ACCESS_KEY.strip()):
+        server_key = SHARED_ACCESS_KEY.strip().strip('"').strip("'")
+        client_key = (x_access_key or "").strip().strip('"').strip("'")
+        if not client_key or not secrets.compare_digest(client_key, server_key):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid or missing access key. Please enter the correct password.",

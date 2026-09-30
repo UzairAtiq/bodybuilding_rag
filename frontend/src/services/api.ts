@@ -13,7 +13,11 @@ export function get_saved_access_key(): string {
 
 export function set_saved_access_key(key: string): void {
   try {
-    localStorage.setItem(ACCESS_KEY_STORAGE_KEY, key.trim())
+    let clean = key.trim()
+    if ((clean.startsWith('"') && clean.endsWith('"')) || (clean.startsWith("'") && clean.endsWith("'"))) {
+      clean = clean.slice(1, -1).trim()
+    }
+    localStorage.setItem(ACCESS_KEY_STORAGE_KEY, clean)
   } catch {
     // ignore local storage errors
   }
@@ -27,22 +31,43 @@ export function clear_saved_access_key(): void {
   }
 }
 
+export interface VerifyKeyResult {
+  ok: boolean
+  error?: string
+}
+
 // verify access key with backend before saving
-export async function verify_access_key(key: string): Promise<boolean> {
+export async function verify_access_key(key: string): Promise<VerifyKeyResult> {
+  let clean_key = key.trim()
+  if (
+    (clean_key.startsWith('"') && clean_key.endsWith('"')) ||
+    (clean_key.startsWith("'") && clean_key.endsWith("'"))
+  ) {
+    clean_key = clean_key.slice(1, -1).trim()
+  }
+
   const direct_endpoint = `${backend_url}/verify-key`
   try {
     const response = await fetch(direct_endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-access-key': key.trim(),
+        'x-access-key': clean_key,
       },
     })
-    return response.ok
-  } catch {
-    return false
+    if (response.ok) {
+      return { ok: true }
+    }
+    if (response.status === 401) {
+      return { ok: false, error: 'Incorrect password. Please verify the access code and try again.' }
+    }
+    return { ok: false, error: `Backend responded with HTTP ${response.status}.` }
+  } catch (network_err) {
+    const msg = network_err instanceof Error ? network_err.message : 'Network failure'
+    return { ok: false, error: `Could not connect to backend server (${msg}).` }
   }
 }
+
 
 interface AskResponse {
   answer: string
