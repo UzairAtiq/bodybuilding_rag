@@ -1,38 +1,37 @@
 # Fitness Bot (Muscle Info RAG)
 
-A production-ready Retrieval-Augmented Generation (RAG) system with a high-impact React interface that answers vintage bodybuilding and resistance training questions grounded strictly in Joe Weider's foundational course materials.
+A Retrieval-Augmented Generation (RAG) system with a React interface that answers bodybuilding and strength training questions grounded in Joe Weider's training course book.
 
 ---
 
-## 🌐 Live Demo & Access
+## Live Demo and Access
 
-The application is deployed live on AWS:
+The project is deployed on AWS:
 
-👉 **[Launch Fitness Bot](https://d1kipqqm1ofiqs.cloudfront.net)**
+[Launch Fitness Bot](https://d1kipqqm1ofiqs.cloudfront.net)
 
-> [!NOTE]
-> **Access Protected**: To prevent unauthorized API abuse and manage upstream Groq and Qdrant Cloud rate limits, the live web interface is secured with a password-gated access screen.
-> 
-> If you are a recruiter, reviewer, or engineer evaluating this project and would like demo credentials, please contact **uzairatiq65@gmail.com** or connect via [GitHub](https://github.com/UzairAtiq) to request a guest access key.
+> Note: Access is password-protected to prevent unauthorized API use and stay within Groq and Qdrant Cloud free-tier rate limits.
+>
+> If you are reviewing this project and want access credentials, please email uzairatiq65@gmail.com or contact me on [GitHub](https://github.com/UzairAtiq) to get a guest password.
 
 ---
 
 ## Overview
 
-General-purpose large language models frequently hallucinate workout routines, blend conflicting training philosophies, or respond to out-of-scope queries. **Fitness Bot** solves this by constraining answers to Joe Weider's verified training course using dense vector embeddings in Qdrant Cloud, CPU-optimized cross-encoder reranking, and domain guardrails on Groq. The system is protected by a password-gated access barrier and served across AWS EC2, S3, and CloudFront.
+General-purpose language models often hallucinate exercise routines, mix up training concepts, or answer questions outside the intended topic. Fitness Bot keeps responses grounded in Joe Weider's vintage training course by using semantic search in Qdrant Cloud, cross-encoder reranking, and explicit prompt guardrails on Groq. The application includes a password gate to protect the API and is hosted on AWS using EC2, S3, and CloudFront.
 
 ---
 
 ## Key Features
 
-- **Hierarchical Markdown Ingestion**: Parses source material by Markdown headers (`Header 1` through `Header 4`) to preserve chapter, section, and exercise context alongside text content.
-- **Dense Vector Retrieval**: Generates 384-dimensional embeddings using `sentence-transformers/all-MiniLM-L6-v2` and retrieves top candidates via cosine distance in Qdrant Cloud.
-- **CPU-Optimized Neural Reranking**: Re-scores top-k retrieved candidates using `cross-encoder/ms-marco-MiniLM-L-6-v2` (truncated to 1,200 characters for sub-second execution on CPU) to filter down to the top-2 most relevant chunks.
-- **Strict Domain Guardrails**: Custom prompt templates explicitly instruct the LLM to reject off-topic questions (geography, politics, general trivia) and deliver direct, structured workout guidance without conversational preamble.
-- **Resilience & Rate Limit Handling**: Gracefully catches Groq 413/429 token-per-minute errors and Qdrant Cloud connection resets, returning clean diagnostic messages rather than raw stack traces.
-- **Password-Gated Access Control**: Timing-safe shared access key verification (`secrets.compare_digest`) protects backend `/ask` and `/verify-key` endpoints.
-- **High-Impact Frontend**: Built with React 19, Vite, and Tailwind CSS. Features an access lock modal, persistent multi-session chat in `localStorage`, fast typewriter streaming simulation, and Markdown rendering with table support.
-- **Production AWS Architecture**: Backend served on AWS EC2 behind an Nginx reverse proxy with HTTPS, paired with a globally distributed static frontend on Amazon S3 and CloudFront CDN.
+- Markdown Document Ingestion: Splits source text using Markdown headers (Header 1 through Header 4) so chapter and exercise titles stay attached to each text chunk.
+- Dense Vector Retrieval: Creates 384-dimensional embeddings using `sentence-transformers/all-MiniLM-L6-v2` and retrieves top candidates via cosine similarity in Qdrant Cloud.
+- Cross-Encoder Reranking: Reranks the top candidates using `cross-encoder/ms-marco-MiniLM-L-6-v2` (truncated to 1,200 characters to keep CPU latency low) to pick the top 2 most relevant chunks.
+- Domain Guardrails: The system prompt tells the model to reject off-topic questions (like geography, politics, or general trivia) and give direct exercise explanations without conversational filler.
+- Rate Limit and Error Handling: Catches Groq 413 and 429 token-per-minute errors as well as Qdrant connection resets, returning readable status notices instead of crashing.
+- Password-Gated Access: Uses a timing-safe shared key check (`secrets.compare_digest`) on `/ask` and `/verify-key` endpoints.
+- React Frontend: Built with React 19, TypeScript, Vite, and Tailwind CSS. Includes an access lock modal, chat history stored in `localStorage`, a typewriter effect, and Markdown rendering for workout tables and lists.
+- AWS Deployment: The FastAPI backend runs on an EC2 instance behind an Nginx reverse proxy with HTTPS. The static frontend is hosted on S3 and delivered globally through CloudFront.
 
 ---
 
@@ -40,47 +39,47 @@ General-purpose large language models frequently hallucinate workout routines, b
 
 | Layer | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Frontend** | React 19, TypeScript, Vite 8.3 | User interface and consultation workflow |
-| **Styling & Icons** | Tailwind CSS 3.4, Lucide React | High-contrast dark theme and typography |
-| **Markdown** | `react-markdown`, `remark-gfm` | Structured output rendering with tables |
-| **Backend API** | FastAPI 0.141, Uvicorn | High-performance asynchronous REST API |
-| **Embeddings** | `sentence-transformers/all-MiniLM-L6-v2` | 384-dimensional dense semantic vectors |
-| **Vector Database** | Qdrant Cloud (`qdrant-client` 1.19) | Cloud-hosted vector search with payload filtering |
-| **Reranker** | `cross-encoder/ms-marco-MiniLM-L-6-v2` | Deep cross-encoder candidate relevance scoring |
-| **LLM Inference** | Groq API (`openai/gpt-oss-120b`) | High-speed grounded response generation |
-| **Orchestration** | LangChain Core (`langchain-core` 1.6) | Prompt templating and chain orchestration |
-| **Containerization**| Docker | Container build with pre-cached model weights |
-| **Cloud Hosting** | AWS (EC2, S3, CloudFront) | Cloud deployment with CDN edge caching |
+| Frontend | React 19, TypeScript, Vite 8.3 | User interface and chat session flow |
+| Styling and Icons | Tailwind CSS 3.4, Lucide React | Dark interface theme and icons |
+| Markdown | `react-markdown`, `remark-gfm` | Renders formatted text, lists, and tables |
+| Backend API | FastAPI 0.141, Uvicorn | REST API endpoints |
+| Embeddings | `sentence-transformers/all-MiniLM-L6-v2` | Generates 384-dimensional dense vectors |
+| Vector Database | Qdrant Cloud (`qdrant-client` 1.19) | Cloud vector search with payload filtering |
+| Reranker | `cross-encoder/ms-marco-MiniLM-L-6-v2` | Scores chunk relevance before prompt generation |
+| LLM Inference | Groq API (`openai/gpt-oss-120b`) | Generates grounded responses |
+| Orchestration | LangChain Core (`langchain-core` 1.6) | Prompt templating and chain wiring |
+| Containerization | Docker | Runs the backend with pre-downloaded model weights |
+| Cloud Hosting | AWS (EC2, S3, CloudFront) | Cloud hosting and CDN distribution |
 
 ---
 
 ## Architecture
 
-```
+```text
 [ User Browser ]
-       │
-       ▼
-[ AWS CloudFront CDN / S3 Bucket ] ─── (Serves React 19 Frontend)
-       │
-       ▼  (HTTPS POST /ask + x-access-key)
+       |
+       v
+[ AWS CloudFront CDN / S3 Bucket ] ---> Serves React 19 Frontend
+       |
+       v (HTTPS POST /ask + x-access-key)
 [ AWS EC2 / Nginx Reverse Proxy ]
-       │
-       ▼
-[ FastAPI App (Uvicorn :8000) ]
-       │
-       ├── 1. check_access_authorization() ──► (Validates SHARED_ACCESS_KEY)
-       │
-       ├── 2. model.encode(query) ──────────► (MiniLM-L6-v2 Embedding)
-       │
-       ├── 3. client.query_points() ────────► [ Qdrant Cloud Cluster ] (Top 5 chunks)
-       │
-       ├── 4. CrossEncoder.predict() ───────► (ms-marco Reranking -> Top 2 chunks)
-       │
-       ├── 5. build_prompt() ───────────────► (System Guardrails + Context Injection)
-       │
-       └── 6. ChatGroq.invoke() ────────────► [ Groq Cloud (gpt-oss-120b) ]
-                                                        │
-       ◄──────────────── Grounded Response ─────────────┘
+       |
+       v
+[ FastAPI Backend (Uvicorn :8000) ]
+       |
+       +--> 1. check_access_authorization() ---> Validates SHARED_ACCESS_KEY
+       |
+       +--> 2. model.encode(query) ---------> MiniLM-L6-v2 Embedding
+       |
+       +--> 3. client.query_points() -------> Qdrant Cloud Cluster (Top 5 chunks)
+       |
+       +--> 4. CrossEncoder.predict() ------> ms-marco Reranking (Top 2 chunks)
+       |
+       +--> 5. build_prompt() --------------> Adds domain guardrails and context
+       |
+       +--> 6. ChatGroq.invoke() -----------> Groq Cloud (gpt-oss-120b)
+                                                    |
+       <--- Grounded Response ----------------------+
 ```
 
 ### Folder Structure
@@ -89,44 +88,44 @@ General-purpose large language models frequently hallucinate workout routines, b
 Muscle_Info_RAG/
 ├── app/
 │   ├── api/
-│   │   └── routes.py             # FastAPI endpoints (/ask, /verify-key, /health) & CORS
+│   │   └── routes.py             # FastAPI endpoints (/ask, /verify-key, /health) and CORS
 │   ├── generation/
-│   │   ├── llm.py                # Groq ChatGroq client & rate-limit error handlers
-│   │   └── prompt.py             # Domain-restricted bodybuilding prompt template
+│   │   ├── llm.py                # Groq ChatGroq client and rate-limit handlers
+│   │   └── prompt.py             # Prompt template with bodybuilding domain guardrails
 │   ├── ingestion/
 │   │   ├── cleaner.py            # Text normalization and whitespace cleaning
 │   │   ├── chunker.py            # MarkdownHeaderTextSplitter (Headers 1-4)
-│   │   ├── indexer.py            # Qdrant collection setup, embedding & upserting
-│   │   └── loaders.py            # Raw markdown file loader
+│   │   ├── indexer.py            # Qdrant collection setup, embedding, and upserting
+│   │   └── loaders.py            # Markdown file loader
 │   ├── retrieval/
 │   │   ├── reranker.py           # Cross-encoder reranking model and scoring
-│   │   └── retriever.py          # Qdrant client query points retrieval
-│   ├── config.py                 # Environment variable configuration
-│   └── pipeline.py               # End-to-end RAG execution pipeline
+│   │   └── retriever.py          # Qdrant client retrieval function
+│   ├── config.py                 # Loads environment variables
+│   └── pipeline.py               # End-to-end RAG pipeline
 ├── data/
 │   ├── evaluation/
 │   │   └── evaluate.json         # Output results from evaluation runs
 │   └── raw/
-│       └── joe-weider-...md      # Source training course markdown
+│       └── joe-weider-...md      # Source course text in Markdown
 ├── frontend/
 │   ├── src/
 │   │   ├── components/           # AccessModal, Header, Sidebar, Chatbox, ChatInput, ChatMessage
-│   │   ├── hooks/                # useTypewriter effect hook
+│   │   ├── hooks/                # Typewriter animation hook
 │   │   ├── services/             # API client connecting to FastAPI (/ask, /verify-key)
 │   │   ├── types/                # Session, message, and query status types
-│   │   ├── App.tsx               # Main state management and consultation sessions
-│   │   └── main.tsx              # React DOM entry point
-│   ├── index.html                # HTML entry point with cache prevention meta tags
-│   ├── package.json              # Frontend dependencies and build scripts
+│   │   ├── App.tsx               # Main application state and session management
+│   │   └── main.tsx              # React entry point
+│   ├── index.html                # HTML template with cache prevention meta tags
+│   ├── package.json              # Frontend dependencies and npm scripts
 │   └── vite.config.ts            # Vite build configuration and path aliases
 ├── scripts/
-│   ├── evaluate.py               # 8-question benchmark evaluation script
-│   └── ingest.py                 # Document chunking, embedding, and indexing script
+│   ├── evaluate.py               # 8-question evaluation script
+│   └── ingest.py                 # Chunks, embeds, and indexes source documents
 ├── tests/
-│   └── benchmark_pipeline.py     # CPU, RAM, and per-component latency profiler
-├── Dockerfile                    # Multi-stage production container definition
+│   └── benchmark_pipeline.py     # Latency and memory profiling script
+├── Dockerfile                    # Container configuration with pre-cached models
 ├── requirements.txt              # Pinned Python dependencies
-├── .env.example                  # Backend environment variable template
+├── .env.example                  # Backend environment variables template
 └── README.md
 ```
 
@@ -136,11 +135,11 @@ Muscle_Info_RAG/
 
 ### Prerequisites
 
-- **Python**: `3.12+`
-- **Node.js**: `18+` and `npm`
-- **Qdrant Cloud Account**: Active cluster and API key ([cloud.qdrant.io](https://cloud.qdrant.io/))
-- **Groq Cloud Account**: Active API key ([console.groq.com](https://console.groq.com/))
-- **(Optional) Docker**: If running containerized
+- Python 3.12 or newer
+- Node.js 18 or newer with npm
+- Qdrant Cloud cluster URL and API key (https://cloud.qdrant.io/)
+- Groq Cloud API key (https://console.groq.com/)
+- Optional: Docker (if you want to run the backend in a container)
 
 ---
 
@@ -183,19 +182,17 @@ cp .env.example .env
 
 | Variable | Description | Required? | Example |
 | :--- | :--- | :---: | :--- |
-| `QDRANT_URL` | Public endpoint URL of your Qdrant Cloud cluster | **Yes** | `https://xyz-cluster.us-east-1.gcp.cloud.qdrant.io` |
-| `QDRANT_API_KEY` | API authentication key for Qdrant Cloud | **Yes** | `th1s-1s-an-ap1-k3y` |
-| `collection_name`| Target Qdrant collection name | No | `bodybuilding_rag` *(default)* |
-| `GROQ_API_KEY` | Groq Cloud API key for model inference | **Yes** | `gsk_abc123...` |
-| `SHARED_ACCESS_KEY` | Secret password required by the lock screen and API | **Yes** | `your-secret-password` |
+| `QDRANT_URL` | Endpoint URL of your Qdrant Cloud cluster | Yes | `https://xyz-cluster.us-east-1.gcp.cloud.qdrant.io` |
+| `QDRANT_API_KEY` | API key for Qdrant Cloud | Yes | `th1s-1s-an-ap1-k3y` |
+| `collection_name` | Target Qdrant collection name | No | `bodybuilding_rag` (default) |
+| `GROQ_API_KEY` | Groq Cloud API key for model generation | Yes | `gsk_abc123...` |
+| `SHARED_ACCESS_KEY` | Password required by the frontend lock screen and API | Yes | `your-secret-password` |
 
-> [!IMPORTANT]
-> **Choosing your `SHARED_ACCESS_KEY`**:
-> For local development, set `SHARED_ACCESS_KEY` in `.env` to any password you prefer (e.g. `SHARED_ACCESS_KEY=my-local-secret`). When you launch the web app, type that exact password into the lock modal to authenticate your browser session.
+> Note: For local development, set `SHARED_ACCESS_KEY` in `.env` to any password you want (for example, `SHARED_ACCESS_KEY=my-local-secret`). When you open the frontend, enter that same password into the access modal to unlock the app.
 
 #### Frontend Configuration (`frontend/.env`)
 
-Create a `.env` file inside `frontend/`:
+Create a `.env` file inside the `frontend/` folder:
 
 ```bash
 cp frontend/.env.example frontend/.env
@@ -203,21 +200,21 @@ cp frontend/.env.example frontend/.env
 
 | Variable | Description | Required? | Example |
 | :--- | :--- | :---: | :--- |
-| `VITE_BACKEND_URL` | URL of the backend FastAPI service | No | `http://localhost:8000` *(default)* |
+| `VITE_BACKEND_URL` | URL of the backend FastAPI service | No | `http://localhost:8000` (default) |
 
 ---
 
 ### Running the Application Locally
 
-#### 1. Ingest Course Material into Qdrant
+#### 1. Ingest the Course Material into Qdrant
 
-Ensure your source book exists in `data/raw/`, then run ingestion:
+Make sure the source markdown file is in `data/raw/`, then run:
 
 ```bash
 python scripts/ingest.py
 ```
 
-*This parses the markdown headers, generates MiniLM embeddings, and upserts point records into your Qdrant Cloud collection.*
+This reads the markdown headers, generates embeddings, and uploads the points into your Qdrant Cloud collection.
 
 #### 2. Start the Backend API
 
@@ -225,9 +222,9 @@ python scripts/ingest.py
 uvicorn app.api.routes:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-The API will be available at `http://localhost:8000`. Interactive OpenAPI documentation is at `http://localhost:8000/docs`.
+The API starts at `http://localhost:8000`. You can view the automatic Swagger documentation at `http://localhost:8000/docs`.
 
-#### 3. Start the Frontend Dev Server
+#### 3. Start the Frontend
 
 In a separate terminal:
 
@@ -236,23 +233,23 @@ cd frontend
 npm run dev
 ```
 
-Open `http://localhost:5173` in your browser and enter your `SHARED_ACCESS_KEY` into the access modal.
+Open `http://localhost:5173` in your browser. Enter your `SHARED_ACCESS_KEY` into the access modal to start asking questions.
 
 ---
 
 ### Running with Docker (Local Container)
 
-The [`Dockerfile`](Dockerfile) uses a Python 3.12 slim base and bakes in both model weights at build time so the container starts instantly without downloading from Hugging Face on cold boot:
+The `Dockerfile` uses a Python 3.12 slim base and downloads both model weights during the build step so containers do not download weights from Hugging Face on startup:
 
 ```bash
 # Build the container image
 docker build -t muscle-info-rag .
 
-# Run the container with environment variables
+# Run the container with your environment file
 docker run -d -p 8000:8000 --env-file .env --name fitness-bot-api muscle-info-rag
 ```
 
-Test container reachability:
+Check that the container is responding:
 
 ```bash
 curl http://localhost:8000/health
@@ -262,11 +259,11 @@ curl http://localhost:8000/health
 
 ## API Endpoints
 
-| Method | Endpoint | Auth Required | Request Body / Header | Response |
+| Method | Endpoint | Auth Required | Request Details | Response |
 | :--- | :--- | :---: | :--- | :--- |
 | `GET` | `/health` | No | None | `{"status": "ok", "service": "Fitness Bot API"}` |
-| `POST` | `/verify-key` | **Yes** | Header: `x-access-key: <key>` | `{"valid": true}` *(or 401 Unauthorized)* |
-| `POST` | `/ask` | **Yes** | Header: `x-access-key: <key>`<br>JSON: `{"query": "string"}` | `{"answer": "string"}` |
+| `POST` | `/verify-key` | Yes | Header: `x-access-key: <key>` | `{"valid": true}` (or 401 Unauthorized) |
+| `POST` | `/ask` | Yes | Header: `x-access-key: <key>`<br>JSON: `{"query": "string"}` | `{"answer": "string"}` |
 
 ### Example Request
 
@@ -287,31 +284,31 @@ curl -X POST "http://localhost:8000/ask" \
 
 ---
 
-## Testing & Performance Profiling
+## Testing and Profiling
 
-### 1. Latency & Resource Profiling
+### 1. Latency and Resource Profiling
 
-A diagnostic profiling script is included in `tests/benchmark_pipeline.py` to isolate per-component bottlenecks across CPU, RAM, embeddings, vector search, reranking, and generation:
+A benchmark script is included in `tests/benchmark_pipeline.py` to measure latency across each step (MiniLM embeddings, Qdrant vector search, CrossEncoder reranking, Groq LLM call) and check CPU/RAM usage:
 
 ```bash
 python tests/benchmark_pipeline.py --runs 3
 ```
 
-**Options**:
-- `--runs <int>`: Number of warm runs to average (default: 3).
-- `--query "<text>"`: Custom query to profile.
-- `--no-system-check`: Skip CPU/RAM diagnostic check.
-- `--profile-only`: Profile without generating full text answers.
+Useful flags:
+- `--runs <int>`: Number of runs to average (default: 3).
+- `--query "<text>"`: Custom question to test.
+- `--no-system-check`: Skips reading system CPU and RAM stats.
+- `--profile-only`: Measures step timings without generating full text answers.
 
 ### 2. Qualitative Retrieval Evaluation
 
-Run the evaluation script to pass 8 domain questions across different course chapters through the pipeline:
+Runs 8 sample questions from different chapters of the source book through the pipeline:
 
 ```bash
 python scripts/evaluate.py
 ```
 
-*Results are logged to `data/evaluation/evaluate.json` with retrieved chunk headers, document identifiers, and similarity scores.*
+Outputs are written to `data/evaluation/evaluate.json`, including the question, answer, and retrieved chunk headers with scores.
 
 ### 3. Unit Tests
 
@@ -319,47 +316,46 @@ python scripts/evaluate.py
 pytest
 ```
 
-*(Note: Unit test suites in `tests/` are currently stubs — see Roadmap).*
+Note: Unit test files in `tests/` currently contain stubs (see Roadmap).
 
 ---
 
 ## AWS Deployment Architecture
 
-The production environment is hosted entirely on AWS:
+The live version runs on AWS infrastructure:
 
 ### 1. Backend on AWS EC2
-- **Host**: Ubuntu EC2 instance running Uvicorn on port `8000`.
-- **Reverse Proxy**: Nginx listening on port `443` (TLS via Let's Encrypt / nip.io domain mapping) proxying to `http://localhost:8000`.
-- **CORS Configuration**: [`app/api/routes.py`](app/api/routes.py) explicitly permits traffic from the CloudFront distribution domain (`https://d1kipqqm1ofiqs.cloudfront.net`) and local dev servers.
+- Host: Ubuntu EC2 instance running Uvicorn on port 8000.
+- Reverse Proxy: Nginx on port 443 with TLS certificates from Let's Encrypt, proxying traffic to `http://localhost:8000`.
+- CORS: Configured in `app/api/routes.py` to allow requests from the CloudFront distribution domain (`https://d1kipqqm1ofiqs.cloudfront.net`) and local dev servers.
 
-### 2. Frontend on AWS S3 + CloudFront
-- **Static Hosting**: The production build bundle (`frontend/dist/`) is stored in an Amazon S3 bucket.
-- **Global CDN**: Amazon CloudFront distribution (`d1kipqqm1ofiqs.cloudfront.net`) serves assets globally from edge caches.
-- **Cache Optimization**:
-  - `dist/assets/*` are content-hashed (`index-COc4Hb0a.js`) and cached permanently.
-  - `dist/index.html` is uploaded with S3 metadata `Cache-Control: no-cache, no-store, must-revalidate` alongside HTML meta tags to ensure client browsers always fetch the latest build immediately without stale cache locks.
+### 2. Frontend on AWS S3 and CloudFront
+- Static Hosting: The production build (`frontend/dist/`) is stored in an S3 bucket.
+- Global CDN: Amazon CloudFront (`d1kipqqm1ofiqs.cloudfront.net`) distributes the static files globally.
+- Cache Handling:
+  - Asset files in `dist/assets/*` use content hashes in filenames (`index-COc4Hb0a.js`) and can be cached long-term.
+  - The `dist/index.html` file has S3 metadata set to `Cache-Control: no-cache, no-store, must-revalidate` along with HTML meta tags so browsers always fetch the newest build immediately.
 
 ---
 
-## Roadmap & Known Limitations
+## Roadmap and Known Limitations
 
-- [ ] **Table Boundary Preservation**: `MarkdownHeaderTextSplitter` splits purely on headers; dense workout charts (exercise, sets, reps) can occasionally split across chunks. Preprocessing tables into serialized JSON or Markdown key-value strings prior to chunking is planned.
-- [ ] **Automated CI/CD Pipeline**: Replace manual S3 upload and CloudFront invalidation steps with a GitHub Actions workflow.
-- [ ] **Unit Test Coverage**: Implement automated unit tests for chunking (`test_ingestion.py`), vector similarity thresholds (`test_retrieval.py`), and pipeline error mocking (`test_pipeline.py`).
-- [ ] **Streaming Responses**: Implement Server-Sent Events (SSE) / WebSocket endpoints in FastAPI to stream Groq generation tokens directly into the React client.
+- Table Boundary Preservation: `MarkdownHeaderTextSplitter` splits on headers rather than table boundaries. As a result, dense workout tables with exercise lists, sets, and reps can sometimes split across chunks. Formatting tables into structured text before chunking is planned.
+- Automated CI/CD: Adding a GitHub Actions workflow to build, upload to S3, and invalidate CloudFront on push.
+- Unit Test Coverage: Implementing automated tests for chunking (`test_ingestion.py`), retrieval scoring (`test_retrieval.py`), and error mocks (`test_pipeline.py`).
+- Token Streaming: Adding Server-Sent Events (SSE) or WebSockets to stream Groq response tokens to the React frontend in real time.
 
 ---
 
 ## License
 
-<!-- TODO: Specify license (e.g. MIT, Apache 2.0, or All Rights Reserved) -->
-TODO
+TODO: Add license details (for example, MIT or All Rights Reserved).
 
 ---
 
 ## Contact
 
-- **Author**: Uzair Atiq
-- **Email**: [uzairatiq65@gmail.com](mailto:uzairatiq65@gmail.com)
-- **GitHub**: [@UzairAtiq](https://github.com/UzairAtiq)
-- **Repository**: [https://github.com/UzairAtiq/bodybuilding_rag](https://github.com/UzairAtiq/bodybuilding_rag)
+- Author: Uzair Atiq
+- Email: uzairatiq65@gmail.com
+- GitHub: https://github.com/UzairAtiq
+- Repository: https://github.com/UzairAtiq/bodybuilding_rag
