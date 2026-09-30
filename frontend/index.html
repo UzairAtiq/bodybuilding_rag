@@ -11,24 +11,6 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
 
-    <!-- on-screen error banner for mobile / webkit debugging -->
-    <script>
-      window.onerror = function(msg, url, line, col, error) {
-        var el = document.createElement('div');
-        el.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#dc2626;color:white;padding:16px;font-size:14px;font-family:monospace;white-space:pre-wrap;z-index:999999;word-break:break-word;max-height:50vh;overflow:auto;box-shadow:0 4px 6px rgba(0,0,0,0.3);';
-        el.innerText = 'ERROR: ' + msg + '\nFile: ' + url + '\nLine: ' + line + (col ? ':' + col : '') + (error && error.stack ? '\nStack:\n' + error.stack : '');
-        (document.body || document.documentElement).appendChild(el);
-      };
-
-      window.addEventListener('unhandledrejection', function(event) {
-        var el = document.createElement('div');
-        el.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#d97706;color:white;padding:16px;font-size:14px;font-family:monospace;white-space:pre-wrap;z-index:999999;word-break:break-word;max-height:50vh;overflow:auto;box-shadow:0 -4px 6px rgba(0,0,0,0.3);';
-        var reason = event.reason;
-        var detail = (reason && (reason.stack || reason.message)) ? (reason.stack || reason.message) : String(reason);
-        el.innerText = 'PROMISE ERROR:\n' + detail;
-        (document.body || document.documentElement).appendChild(el);
-      });
-    </script>
     
     <!-- preconnect and load bold high-impact fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
